@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>User Management</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #555; /* Change the background color */
+        background-image: url("path/to/your/pattern.png"); /* Add a background image */
+        background-repeat: repeat; /* Make the background image repeat */
+        margin: 0;
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+      }
+
+      .container {
+        background-color: #fff;
+        border-radius: 7px;
+        padding: 40px;
+        width: 300px;
+        max-width: 100%;
+        text-align: center;
+        overflow: hidden; /* Add this to contain the animations */
+      }
+
+      .key-form-container {
+        background-color: rgba(
+          255,
+          255,
+          255
+        ); /* Semi-transparent white background */
+        border-radius: 7px;
+        padding: 40px;
+        width: 150;
+        max-width: 100%;
+        text-align: center;
+        outline-color: #333;
+        outline-style: groove;
+        overflow: hidden; /* Add this to contain the animations */
+        position: absolute; /* Position the container absolutely */
+        top: 50%; /* Center vertically */
+        left: 50%; /* Center horizontally */
+        transform: translate(-50%, -50%); /* Center the container */
+        z-index: 1; /* Place the container in front of the other container */
+      }
+
+      .register-form {
+        animation: slideInTop 0.5s ease;
+      }
+
+      .login-form {
+        animation: slideInBottom 0.5s ease;
+      }
+
+      @keyframes slideInTop {
+        from {
+          transform: translateY(-100%);
+        }
+        to {
+          transform: translateY(0);
+        }
+      }
+
+      @keyframes slideInBottom {
+        from {
+          transform: translateY(100%);
+        }
+        to {
+          transform: translateY(0);
+        }
+      }
+
+      h1 {
+        margin-bottom: 30px;
+        color: #333;
+      }
+
+      form {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+
+      label {
+        margin-bottom: 10px;
+        color: #555;
+      }
+
+      input {
+        padding: 10px;
+        margin-bottom: 20px;
+        width: 100%;
+        border: 1px solid #ccc;
+        border-radius: 3px;
+        box-sizing: border-box;
+      }
+
+      input:focus {
+        outline: 1px solid #000000; /* Change outline color and width when focused */
+      }
+
+      select {
+        padding: 10px;
+        margin-bottom: 20px;
+        width: 100%;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-sizing: border-box;
+      }
+
+      .button {
+        padding: 12px 20px;
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        border-radius: 10px;
+        width: 100%;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+      }
+
+      .button:hover {
+        background-color: #0056b3;
+      }
+
+      .toggle-button {
+        margin-top: 20px;
+        background-color: transparent;
+        border: none;
+        color: #007bff;
+        cursor: pointer;
+        font-size: 15px;
+        text-decoration: underline;
+      }
+
+      .toggle-button:hover {
+        color: #0056b3;
+      }
+
+      .error-message {
+        color: #dc3545;
+        margin-top: 10px;
+      }
+
+      .small-section h1 {
+        font-size: 1rem;
+        margin-bottom: 10px;
+      }
+
+      .form-heading {
+        border-bottom: 2px solid #ccc;
+        padding-bottom: 20px;
+        margin-bottom: 30px;
+        text-align: left;
+        font-size: 30px;
+      }
+
+      .text-left {
+        text-align: left;
+      }
+
+      label {
+        margin-bottom: 10px;
+        color: #555;
+        font-size: 14px;
+        font-weight: bold;
+        text-align: left;
+      }
+
+      form label {
+        text-align: left;
+        display: block;
+        width: 100%;
+      }
+
+      .text-right {
+        margin-left: auto;
+      }
+      .flex {
+        display: flex;
+        align-items: center; /* Align items vertically */
+      }
+
+      /* Add margin between the text and toggle-link */
+
+      .toggle-button {
+        background-color: transparent;
+        border: none;
+        color: #007bff;
+        cursor: pointer;
+        font-size: 15px;
+        text-decoration: underline;
+        margin-left: 5px; /* Add margin between the text and button */
+      }
+
+      .toggle-link {
+        color: #007bff; /* Set color to the default hyperlink color */
+        cursor: pointer;
+        text-decoration: underline; /* Add underline to simulate hyperlink */
+        transition: color 0.3s ease; /* Add transition effect for color change on hover */
+      }
+
+      .toggle-link:hover {
+        color: #0056b3; /* Change color on hover */
+      }
+
+      .error-message-container {
+        color: #dc3545;
+        font-size: 11.5px;
+        border: 1px solid red;
+        padding: 10px;
+        margin-top: 0%; /* Reduce the space at the top */
+        margin-bottom: 10px; /* Add margin to the bottom to increase space between error message and form elements */
+        width: 93%;
+        border-radius: 5px;
+        background-color: #ffe6e6;
+        text-align: left;
+      }
+      .password-container {
+        position: relative;
+        display: flex;
+        align-items: center; /* Align items vertically */
+      }
+
+      .password-container button {
+        padding: 10px; /* Match the padding with input */
+        margin-top: -20px; /* Adjust the margin to align the button */
+        margin-left: -1px;
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        border-radius: 0 4px 4px 0; /* Match the border-radius with input */
+        cursor: pointer;
+        font-size: 14px; /* Match the font-size with input */
+        transition: background-color 0.3s ease;
+      }
+
+      .password-container button:hover {
+        background-color: #0056b3;
+      }
+
+      .close-button {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        font-size: 20px;
+        background-color: transparent;
+        border: none;
+        color: #555;
+        cursor: pointer;
+        z-index: 9999; /* Ensure the close button is above other elements */
+      }
+      .close-button:hover {
+        color: #333;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="key-form-container" style="display: none" id="keydiv">
+      <button id="closeKeyFormBtn" class="close-button">×</button>
+      <form id="keyForm">
+        <h2>Key</h2>
+        <label for="keys">Key:</label>
+        <input type="number" id="keys" name="key" required />
+        <button class="button" type="submit">Submit</button>
+      </form>
+    </div>
+
+    <div class="container">
+      <form id="registerForm" class="register-form" style="display: none">
+        <h2 class="form-heading">Register</h2>
+        <label for="registerName">Name:</label>
+        <input type="text" id="registerName" name="name" required />
+        <label for="registerAge">Age:</label>
+        <input type="number" id="registerAge" name="age" required />
+        <label for="registerPassword">Password:</label>
+        <input type="password" id="registerPassword" name="password" required />
+        <label for="registerPasswordConfirm">Confirm Password:</label>
+        <input
+          type="password"
+          id="registerPasswordConfirm"
+          name="password"
+          required
+        />
+        <label for="registerGender">Gender:</label>
+        <select id="registerGender" name="gender" required>
+          <option value="male">Male</option>
+          <option value="female">Female</option>
+        </select>
+        <label for="registerEmail">Email:</label>
+        <input type="email" id="registerEmail" name="email" required />
+        <button class="button" type="submit">Register</button>
+        <div style="margin-top: 20px">
+          <span>Already have an account? </span>
+          <a class="toggle-link" id="toggleToLogin">Login</a>
+        </div>
+      </form>
+
+      <!-- Login Form -->
+      <form id="loginForm" class="login-form">
+        <div>
+          <h2 class="form-heading">Login</h2>
+          <label for="loginName">Name:</label>
+          <input type="text" id="loginName" name="name" required />
+          <label for="loginPassword">Password:</label>
+          <div class="password-container">
+            <input
+              type="password"
+              id="loginPassword"
+              name="password"
+              required
+            />
+            <button type="button" id="showPasswordBtn">Show</button>
+          </div>
+
+          <button class="button" type="submit">Login</button>
+          <div style="margin-top: 20px">
+            <a href="ForgotPassword.html">Forgot Password?</a>
+          </div>
+          <div style="margin-top: 20px">
+            <span>Have no account? </span>
+            <a class="toggle-link" id="toggleToRegister">Register</a>
+          </div>
+        </div>
+      </form>
+
+      <!-- Toggle Button -->
+
+      <!-- Key Form -->
+    </div>
+
+    <script>
+        let code; // Define code globally
+        let name;
+        let age;
+        let password;
+        let email;
+        let gender;
+        let check;
+        const keyForm = document.getElementById("keydiv");
+        const registerForm = document.getElementById("registerForm");
+        const loginForm = document.getElementById("loginForm");
+
+        document
+          .getElementById("closeKeyFormBtn")
+          .addEventListener("click", function () {
+            document.querySelector(".key-form-container").style.display = "none";
+          });
+
+        toggleToLogin.addEventListener("click", function () {
+          registerForm.style.display = "none";
+          loginForm.style.display = "block";
+          keyForm.style.display = "none";
+          toggleToLogin.style.display = "none";
+          toggleToRegister.style.display = "inline"; // Show the toggle to register
+        });
+
+        toggleToRegister.addEventListener("click", function () {
+          registerForm.style.display = "block";
+          loginForm.style.display = "none";
+          keyForm.style.display = "none";
+          toggleToLogin.style.display = "inline"; // Show the toggle to login
+          toggleToRegister.style.display = "none";
+        });
+
+        function displayError(element, reason) {
+          // Create the error message box
+          const errorContainer = document.createElement("div");
+          errorContainer.className = "error-message-container";
+          errorContainer.textContent = `${reason}`;
+
+          // Insert the error message box after the element
+          element.insertAdjacentElement("afterend", errorContainer);
+        }
+
+        function clearError(element) {
+          const errorContainer = element.nextElementSibling;
+          if (
+            errorContainer &&
+            errorContainer.classList.contains("error-message")
+          ) {
+            errorContainer.remove();
+          }
+        }
+
+        async function Check(element, test) {
+          const response = await fetch("http://localhost:3001/UserCheck", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ element, test }),
+          });
+          return response.json();
+        }
+
+        document
+  .getElementById("registerForm")
+  .addEventListener("submit", async function (event) {
+    event.preventDefault(); // Prevent default form submission
+
+    name = document.getElementById("registerName").value;
+    age = document.getElementById("registerAge").value;
+    password = document.getElementById("registerPassword").value;
+    gender = document.getElementById("registerGender").value;
+    email = document.getElementById("registerEmail").value;
+    ConfirmPassword = document.getElementById(
+      "registerPasswordConfirm"
+    ).value;
+
+    try {
+      if (password !== ConfirmPassword) {
+        displayError(
+          document.getElementById("registerPasswordConfirm"),
+          "Password is wrong"
+        );
+        return; // Exit function to prevent further processing
+      }
+
+      // User does not exist, proceed with generating code and sending email
+      code = Math.floor(1000 + Math.random() * 9000);
+      console.log(`Generated code: ${code}`);
+
+      keyForm.style.display = "block";
+
+      // Send the generated code to the server to send as an email
+
+    } catch (error) {
+      console.error("Error occurred:", error);
+    }
+  });
+
+        document
+          .getElementById("keyForm")
+          .addEventListener("submit", async function (event) {
+            event.preventDefault(); // Prevent default form submission
+            // Other code for key verification
+            const keyInput = parseInt(document.getElementById("keys").value, 10);
+            console.log(`${code} and ${keyInput}`);
+
+            if (keyInput === parseInt(code)) {
+              // Check if the entered key matches the generated code
+              try {
+                const response = await fetch("http://localhost:3001/addUser", {
+                  method: "POST",
+                  headers: {
+                    "Content-Type": "application/json",
+                  },
+                  body: JSON.stringify({ name, age, password, gender, email }), // Include user details along with the key
+                });
+
+                if (response.ok) {
+                  // Key is valid, proceed with user registration
+                  // Clear the registration form fields
+                  document.getElementById("registerName").value = "";
+                  document.getElementById("registerAge").value = "";
+                  document.getElementById("registerPassword").value = "";
+                  document.getElementById("registerGender").value = "";
+                  document.getElementById("registerEmail").value = "";
+                  registerForm.style.display = "none";
+                  keyForm.style.display = "none";
+                } else {
+                  console.error("Error registering user:", response.statusText);
+                }
+              } catch (error) {
+                console.error("Error:", error);
+              }
+            } else {
+              console.error("Invalid key");
+              console.log("lakaka");
+            }
+            location.reload();
+          });
+
+        document
+          .getElementById("loginForm")
+          .addEventListener("submit", async function (event) {
+            event.preventDefault();
+
+            const name = document.getElementById("loginName").value;
+            const password = document.getElementById("loginPassword").value;
+
+            try {
+              const response = await fetch("http://localhost:3001/login", {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ name, password }),
+              });
+
+              const responseData = await response.json();
+
+              if (responseData.Erroruser) {
+                displayError(
+                  document.getElementById("loginName"),
+                  "User dose not exis"
+                );
+                return;
+              }
+              if (responseData.Errorpassword) {
+                displayError(
+                  document.getElementById("loginPassword"),
+                  "Wrong password"
+                );
+                return;
+              }
+
+              if (response.ok && responseData.redirectUrl) {
+                // Redirect to the "home" folder upon successful login
+                localStorage.setItem("username", name);
+                localStorage.setItem("password", password);
+                window.location.href = responseData.redirectUrl;
+              } else {
+                // Display error message if login fails
+                alert(
+                  "Login failed. Please check your credentials and try again."
+                );
+              }
+            } catch (error) {
+              console.error("Error:", error);
+              alert(
+                "An error occurred while processing your request. Please try again later."
+              );
+            }
+          });
+        document.addEventListener("DOMContentLoaded", function () {
+          var passwordField = document.getElementById("loginPassword");
+          var showPasswordButton = document.getElementById("showPasswordBtn");
+
+          showPasswordButton.addEventListener("click", function () {
+            if (passwordField.type === "password") {
+              passwordField.type = "text";
+            } else {
+              passwordField.type = "password";
+            }
+          });
+        });
+    </script>
+  </body>
+</html>

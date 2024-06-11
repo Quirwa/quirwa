@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <style>
+body {
+  background-color: aqua;
+  transition: background-color 0.5s ease; /* Added transition property */
+}
+
+.black-bg {
+  background-color: black;
+}
+    
+    .clrmode-container {
+      width: 50px;
+      height: 20px;
+      border-radius: 15px;
+      background-color: white;
+      margin-bottom: 100px;
+      display: flex;
+      align-items: flex-end;
+      justify-content: flex-start; /* Align items to the right */
+      transition: justify-content .5s ;
+    }
+    .clrmode-button {
+  width: 20px;
+  height: 20px;
+  background-color: black;
+  border-radius: 15px;
+  transition: margin-left 0.5s ease; /* Added transition property */
+}
+
+    .clrmode .clrmode-button {
+  margin-left: 30px; /* Adjust margin for white mode */
+}
+  </style>
+  <body>
+    <div class="clrmode-container" id="clrmode">
+      <div class="clrmode-button"></div>
+    </div>
+  </body>
+  <script>
+    var mode = document.getElementById("clrmode");
+    mode.addEventListener("click", function () {
+        document.body.classList.toggle("black-bg");
+        mode.classList.toggle("white")
+    });
+  </script>
+</html>

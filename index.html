@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link
+      rel="shortcut icon"
+      href="/logo.png"
+      
+    />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Quirwa</title>
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap"
+    />
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+        background-color: #121212;
+
+        color: #e0e0e0;
+        font-family: "Roboto", sans-serif;
+        transition: background-color 0.5s ease;
+      }
+
+      .Top-Container {
+        position: fixed;
+        top: 0;
+        width: 100%;
+        height: 60px;
+        background-color: rgba(0, 0, 0, 0.1);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        color: #f5f5f5;
+        transition: background-color 0.3s ease;
+        box-shadow: 0px 2px 5px rgba(134, 134, 134, 0.8);
+        z-index: 1000;
+        padding: 0 20px;
+        opacity: 1;
+        transition: opacity 0.6s ease;
+      }
+      .Top-ContainerScroll {
+        background-color: rgba(0, 0, 0, 0.9);
+      }
+      .Top-Container h1 {
+        cursor: pointer;
+      }
+      .Top-Containerbtn {
+        margin-right: 30px;
+        display: flex;
+        align-items: center;
+      }
+      .Top-Containerbtn p:hover {
+        background-color: rgba(255, 255, 255, 0.5);
+      }
+      .HeaderText {
+        position: absolute;
+        top: 20%;
+        left: 15%;
+        margin-left: 20px;
+        font-family: "Courier New", Courier, monospace;
+        font-size: 2em;
+        color: #00ff00;
+      }
+      img.background {
+        width: 100%;
+        height: 90vh;
+        object-fit: cover;
+        opacity: 0.3;
+        z-index: -1;
+      }
+      .info-container {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        width: 100%;
+        margin: 20px;
+      }
+      .containers {
+        background-color: #1e1e1e;
+        color: #f5f5f5;
+        width: 400px;
+        margin: 20px;
+        padding: 20px;
+        border: 1px solid #333;
+        border-radius: 10px;
+        transition: transform 0.3s;
+      }
+      .containers:hover {
+        transform: translateY(-5px);
+      }
+      .showanimation {
+        opacity: 0;
+        transform: translateY(20px);
+        transition: opacity 1s, transform 1s;
+      }
+      .animate {
+        opacity: 1;
+        transform: translateY(0);
+      }
+      .containers h1,
+      .containers p {
+        margin: 20px 0;
+      }
+      .main-container {
+        width: 90%;
+        margin: 20px auto;
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+      .projects-container {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        width: 100%;
+      }
+      .projects-container h1 {
+        margin: 20px 0;
+        color: #f5f5f5;
+        font-weight: 700;
+      }
+      .project {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        width: 100%;
+      }
+      .project-info {
+        background-color: #1e1e1e;
+        color: #f5f5f5;
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        margin: 20px;
+        padding: 40px 20px;
+        gap: 40px;
+        border: 1px solid #333;
+        border-radius: 5px;
+      }
+      .project-info h1,
+      .project-info p {
+        margin: 20px 0;
+      }
+      .project-text {
+        height: auto;
+        width: 300px;
+        margin-left: 20px;
+      }
+      .project-previewbtn {
+        position: absolute;
+        bottom: 15%;
+        color: wheat;
+        text-decoration: none;
+        padding: 10px;
+        background-color: rgb(61, 61, 61);
+        transition: background-color 0.5s ease, border-radius 0.2s ease;
+      }
+      .project-previewbtn:hover {
+        background-color: rgb(95, 95, 95);
+        border-radius: 5px;
+      }
+      .project-img {
+        background-color: #1e1e1e;
+        color: #f5f5f5;
+        width: auto;
+        margin: 20px;
+      }
+      .join {
+        width: 150px;
+        padding: 10px;
+        background-color: rgb(99, 99, 179);
+        text-decoration: none;
+        color: wheat;
+        display: flex;
+        justify-content: center;
+        transition: background-color 0.5s ease, border-radius 0.2s ease;
+      }
+      .join:hover {
+        background-color: rgb(116, 116, 148);
+        border-radius: 5px;
+      }
+      .DiscordLogo {
+        width: 100px;
+        height: auto;
+      }
+      .project-img-img {
+        width: 0;
+        height: 0;
+        opacity: 0;
+        transition: opacity 1s ease, width 0s ease, height 0s ease;
+      }
+
+      .project-img-img.active {
+        opacity: 1;
+        width: 375px;
+        height: 250px;
+        object-fit: cover;
+      }
+      .typing {
+        border-right: 2px solid white;
+        white-space: nowrap;
+        overflow: hidden;
+        width: 0;
+        animation: typing 2s steps(8) forwards, blink 0.75s step-end infinite;
+      }
+      @keyframes typing {
+        from {
+          width: 0;
+        }
+        to {
+          width: 8ch;
+        }
+      }
+      @keyframes blink {
+        from,
+        to {
+          border-color: transparent;
+        }
+        50% {
+          border-color: white;
+        }
+      }
+      .circles {
+        display: flex;
+        width: auto;
+        height: auto;
+        justify-content: center;
+        margin: 20px;
+        gap: 10px;
+      }
+      .circle {
+        width: 10px;
+        height: 10px;
+        border-radius: 100px;
+        background-color: rgb(151, 151, 151);
+        cursor: pointer;
+        transition: background-color 0.5s ease, transform 0.5s ease;
+        outline: 0.1px solid rgb(90, 90, 90, 0.5);
+      }
+      .circle:hover {
+        background-color: #333;
+        transform: scale(1.5);
+      }
+      .active-circle {
+        background-color: #333;
+        transform: scale(1.5);
+      }
+      .clrmode-container {
+        z-index: 1100;
+        width: 50px;
+        height: 20px;
+        outline: 2px solid rgb(131, 131, 131);
+        border-radius: 15px;
+        background-color: black;
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        transition: background-color 0.5s ease;
+      }
+      .clrmode-button {
+        width: 20px;
+        height: 20px;
+        background-color: rgb(122, 122, 122);
+        border-radius: 15px;
+        transition: margin-left 0.5s ease, background-color 0.5s ease;
+      }
+      .black-bg .clrmode-container {
+        background-color: white;
+      }
+      .clrmode .clrmode-button {
+        margin-left: 30px;
+      }
+      .black-bg {
+        background-color: rgb(170, 204, 153);
+      }
+      .black-bg .project-heading {
+        color: black;
+      }
+      .black-bg .HeaderText {
+        color: black;
+      }
+      .black-bg img.background {
+        opacity: 0.6;
+      }
+      .footer {
+        background-color: #1e1e1e;
+        color: #f5f5f5;
+        padding: 40px 20px;
+        text-align: center;
+      }
+      .footer h1 {
+        margin-bottom: 20px;
+      }
+
+      .contact-social {
+        display: flex;
+        justify-content: center;
+        margin-top: 20px;
+      }
+      .socialicon {
+        width: 30px;
+        height: 30px;
+        filter: grayscale(100%);
+        transition: filter 0.5s ease, transform 0.5s ease;
+        cursor: pointer;
+        margin: 0 10px;
+      }
+      .socialicon:hover {
+        filter: none;
+        transform: scale(1.5);
+      }
+      @media (max-width: 1052px) {
+        .project-text {
+          margin-left: 0;
+        }
+        .project-img-img.active {
+          width: 100%;
+        }
+        .project-text a {
+          bottom: 5.5%;
+          left: 40px;
+        }
+      }
+      @media (max-width: 520px) {
+        img.background {
+          height: 50vh;
+        }
+        .HeaderText {
+          top: 35%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+        }
+        .project-text a {
+          position: absolute;
+          left: 50%;
+          transform: translateX(-50%);
+          bottom: 2%;
+          color: wheat;
+          text-decoration: none;
+          padding: 10px;
+          background-color: rgb(61, 61, 61);
+          transition: background-color 0.5s ease, border-radius 0.2s ease;
+        }
+      }
+      .hide {
+        opacity: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <img src="images/header.jpg" alt="Header Image" class="background" />
+    <div id="Top-Container" class="Top-Container">
+      <h1 onclick="reloadAndScroll()">Quirwa</h1>
+      <div class="Top-Containerbtn">
+        <div class="clrmode-container" id="clrmode">
+          <div class="clrmode-button"></div>
+        </div>
+      </div>
+    </div>
+    <h1 class="HeaderText">Hello, I'm Quirwa</h1>
+    <div class="main-container">
+      <div class="info-container">
+        <div class="containers showanimation">
+          <h1>Who Are We?</h1>
+          <p>
+            Welcome to Quirwa, where innovation meets excellence. We're a
+            dynamic team passionate about digital craftsmanship, specializing in
+            website development and Discord bot creation.
+          </p>
+        </div>
+        <div class="containers showanimation">
+          <h1>What Do We Do?</h1>
+          <p>
+            We are crafting websites and custom Discord bots. From eye-catching
+            online platforms to tailored bot solutions, we're here to elevate
+            your digital presence and enhance user engagement. Let's bring your
+            ideas to life together.
+          </p>
+        </div>
+      </div>
+      <div class="projects-container">
+        <h1 id="projects" class="project-heading" style="opacity: 0">
+          Projects
+        </h1>
+        <div class="project">
+          <div class="project-info showanimation">
+            <div class="project-text">
+              <h1>Websites</h1>
+              <p>
+                Over the years, I've dedicated myself to crafting a diverse
+                array of websites tailored to meet various needs and objectives.
+                All of my websites are also optimized for phone compatibility.
+              </p>
+              <a href="/linktree/index.html" class="project-previewbtn"
+                >Watch websites</a
+              >
+            </div>
+            <div class="project-img">
+              <img
+                id="project-image1"
+                src="images/project/1.png"
+                alt="Project Image"
+                class="project-img-img"
+              />
+              <img
+                id="project-image2"
+                src="images/project/2.png"
+                alt="Project Image"
+                class="project-img-img"
+              />              <img
+              id="project-image3"
+              src="images/project/3.png"
+              alt="Project Image"
+              class="project-img-img"
+            />
+              <div class="circles">
+                <div class="circle" onclick="showSlide(1)" id="circle1"></div>
+                <div class="circle" onclick="showSlide(2)"></div>
+                <div
+                  class="circle"
+                  onclick="showSlide(3)"
+                ></div>
+              </div>
+            </div>
+          </div>
+          <div
+            style="
+              width: 900px;
+              display: flex;
+              justify-content: center;
+              align-items: center;
+            "
+          >
+            <div
+              style="
+                width: 80%;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+              "
+            >
+              <div class="project-info showanimation">
+                <div class="project-text">
+                  <h1>Discord Bots</h1>
+                  <p>
+                    I have created a login form with registration functionality.
+                    When the data is sent to the database, it gets stored. If an
+                    email or username is already in use during registration, an
+                    error message appears.
+                  </p>
+                  <a href="https://discord.com/invite/2r2kEqq542" class="join">Join</a>
+                </div>
+                <div class="project-img">
+                  <img
+                    src="images/icons8-discord-logo-480.png"
+                    alt="Project Image"
+                    class="DiscordLogo"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <footer class="footer">
+        <div class="contact">
+          <h1>Contact</h1>
+          <a href="mailto:quirwadev@gmail.com"
+            >quirwadev@gmail.com</a
+          >
+          <div class="contact-social">
+            <img
+              src="images/icons8-facebook-48.png"
+              alt="Facebook"
+              class="socialicon"
+              onclick="openNewTab(`https://www.facebook.com/profile.php?id=61560222130829`)"
+            />
+            <img
+              src="images/icons8-instagram-48.png"
+              alt="Instagram"
+              class="socialicon"
+            />
+            <img
+              src="images/icons8-discord-48.png"
+              alt="Discord"
+              class="socialicon"
+              onclick="openNewTab(`https://discord.gg/2r2kEqq542`)"
+            />
+          </div>
+        </div>
+      </footer>
+    </div>
+    <script src="index.js">
+    </script>
+  </body>
+</html>
